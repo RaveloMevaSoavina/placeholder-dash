@@ -2,27 +2,21 @@ import React, { useState , useEffect} from 'react'
 import styled from 'styled-components'
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import the FontAwesomeIcon component
-import { faTrash } from "@fortawesome/free-solid-svg-icons"; // import the icons you need
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons"; // import the icons you need
 
-function Blog({data, redirect}) {
-    const [img , setImg] = useState([]);
-
-    useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/photos')
-        .then((response) => response.json())
-        .then((json) => setImg(json));
-    },[]);
-    
+function Blog({data, redirect, users , remove}) {
 
     return (
         <Container>
+            
             {data?.map(post=>
-            <SinglePostContainer onClick={()=>redirect(post.id)}>
-                <Image alt='nothing' src={img.filter(image => image.id === post.id)[0]?.url}/>
-                <span>
-                    <h3>{post.title}</h3>
-                    <p>{post.body}</p>
-                </span>
+            <SinglePostContainer >
+                    <button onClick={()=>remove(post.id)}>
+                        <FontAwesomeIcon icon={faTrashAlt}/>
+                    </button>
+                    <h3 onClick={()=>redirect(post.id)}>{post?.title?.charAt(0)?.toUpperCase() + post?.title?.slice(1)}</h3>
+                    <span >Edit by @{users?.filter(user => user?.id === post?.userId)[0]?.name}</span>
+                    <p onClick={()=>redirect(post.id)}>{post?.body?.charAt(0)?.toUpperCase() + post?.body?.slice(1)}.</p>
             </SinglePostContainer>
             )}
         </Container>
@@ -31,55 +25,50 @@ function Blog({data, redirect}) {
 
 export default Blog
 
-
-const Image = styled.img`
-    width : 200px;
-    height : 100px;
-`
-
-
 const Container = styled.div`
     margin : 20px;
     padding : 20px;
+    width : 700px;
     
 `
 
-
-
 const SinglePostContainer = styled.div`
-    display : flex;
-    flex-direction : row;
-    padding : 10px 20px ;
+    padding : 10px ;
+    border-radius : 10px;
     cursor : pointer;
-    background-color : rgba(232,232,252);
-    border-bottom : 1px solid rgba(0,0,0,0.09);
-    transition : 1s width ease;
-    margin : 20px 10px; 
-    &:hover{
-        background-color : rgba(196,144,231, 0.2);
-    }
+    background-color : #A8BADD;
+    margin : 10px 0; 
     h3{
         font-weight : 500;
-        font-size : 15px;
-        margin : 0;
-        padding : 5px;
+        font-size : 14px;
+        margin : 15px 0;
     }
     p{
-        margin : 0;
-        padding : 5px;
-        font-size : 13px;
+        margin : 10px 0;
+        font-size : 12px;
 
     }
     span{
-        margin-left : 30px;
+        font-size : 13px;
+        background-color : #1E3CBF;
+        color : #DDE4F0;
+        padding : 5px 10px;
+        border-radius : 5px;
+        margin : 5px 0;
     }
     button{
-        position : absolute;
-        right : 210px;
-        text-align : right;
+        float : right;
         background : none;
         border : none;
         cursor : pointer;
+        border-radius : 50%;
+        width : 30px;
+        height : 30px;
+        padding : 5px;
+        &:hover{
+            background-color : #FFF;
+            color : #ff0055;
+        }
     }
     }
 `
