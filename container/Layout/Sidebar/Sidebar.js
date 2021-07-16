@@ -4,12 +4,12 @@ import React from 'react';
 import styled from 'styled-components'
 import {menuitems} from './Sidebaritems';
 
-
+import ImageSvg from '../../../assets/images/logo.svg'
 
 function Sidebar() {
     return (
         <Container>
-            <Logo src={`assets/images/sahazam.png`} alt="DASH"/>
+            <Logo src={`http://localhost:3000/assets/images/shazam.png`} alt="P"/>
                 <ItemList>
                 {
                     
@@ -30,8 +30,8 @@ function Sidebar() {
 export default Sidebar;
 
 const Logo = styled.img`
-    margin : 20px 10px;
-    width : 200px;
+    margin : 20px;
+    width : 50px;
     padding : 10px 0;
     
 `

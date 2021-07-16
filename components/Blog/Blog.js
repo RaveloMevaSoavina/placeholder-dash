@@ -9,7 +9,6 @@ function Blog({data, redirect, users , remove , edit}) {
 
     return (
         <Container>
-            
             {data?.map(post=>
             <SinglePostContainer >
                     <button onClick={()=>remove(post.id)}>
@@ -18,7 +17,9 @@ function Blog({data, redirect, users , remove , edit}) {
                     <button onClick={()=>edit(post.id)}>
                         <FontAwesomeIcon icon={faPencilAlt}/>
                     </button>
-                    <h3 onClick={()=>redirect(post.id)}>{post?.title?.charAt(0)?.toUpperCase() + post?.title?.slice(1)}</h3>
+                    <span>
+                        <h3 onClick={()=>redirect(post.id)}>{post?.title?.charAt(0)?.toUpperCase() + post?.title?.slice(1)}</h3>
+                    </span>
                     <Author >Edit by @{users?.filter(user => user?.id === post?.userId)[0]?.name}</Author>
                     {post.completed != undefined && <div test={post?.completed === true ? "complete" : "uncomplete"}>{post.completed == true ? "Complete" : "Uncomplete"}</div>}
                     {post.body != undefined && <p onClick={()=>redirect(post.id)}>{post?.body?.charAt(0)?.toUpperCase() + post?.body?.slice(1)}.</p>}
@@ -31,22 +32,25 @@ function Blog({data, redirect, users , remove , edit}) {
 export default Blog
 
 const Container = styled.div`
-    margin : 20px;
-    padding : 20px;
-    width : 700px;
-    
+    margin : 10px 20px; 
+    display : flex;
+    flex-direction : column;
+    width : calc(100vh - 110px)
+    flex-grow : 1;
 `
 
 const SinglePostContainer = styled.div`
-    padding : 10px ;
+    flex : 1;
+    padding : 10px 20px;
     border-radius : 10px;
     cursor : pointer;
     background-color : #A8BADD;
-    margin : 10px 0; 
+    margin : 10px 20px; 
     h3{
         font-weight : 500;
         font-size : 14px;
         margin : 15px 0;
+        width : 100%;
     }
     p{
         margin : 10px 0;
@@ -71,6 +75,7 @@ const SinglePostContainer = styled.div`
         width : 30px;
         height : 30px;
         padding : 5px;
+        outline : none;
         &:hover{
             background-color : #FFF;
             color : #ff0055;

@@ -16,6 +16,9 @@ import { faFilter } from "@fortawesome/free-solid-svg-icons"; // import the icon
 function posts({data}) {
     const router = useRouter()
 
+    const [edit , setEdit] = useState([])
+    const [editing, setEdition] = useState(false)
+
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
 
@@ -39,9 +42,11 @@ function posts({data}) {
 
     const handleEdit = (id) => {
         setOpenNew(true);
-        setEdit(basedTodos.filter(todo=> todo.id == id));
+        setEdition(true);
+        setEdit(basedPosts.filter(todo=> todo.id == id));
     }
 
+    console.log(edit)
     return (
         <div>
             <Head>
@@ -49,22 +54,16 @@ function posts({data}) {
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />    
             </Head>
             <Titlebar title="Posts" subtitle={`All public posts (${basedPosts.length} items)`}/>
-            <Content>
-            <div>
-                <ActionGroup>
-                    <Button onClick={()=>setOpenNew(!openNew)}> <FontAwesomeIcon icon={faPlus}/> <span>Add a new Post</span></Button>
-                </ActionGroup>
-                <Blog data={currentPosts} redirect={redirectToSingle} users={data.users} remove={handleremove} edit={handleEdit}/>
-                <Pagination
+            <ActionGroup>
+                <Button onClick={()=>setOpenNew(!openNew)}> <FontAwesomeIcon icon={faPlus}/> <span>Add a new Post</span></Button>
+            </ActionGroup>
+            {openNew && <Form setList={(news)=>setBasePosts([...basedPosts, news])} edit={edit} editing={editing}/>}
+            <Blog data={currentPosts} redirect={redirectToSingle} users={data.users} remove={handleremove} edit={handleEdit}/>
+            <Pagination
                     postsPerPage={postsPerPage}
                     totalPosts={basedPosts.length}
                     paginate={paginate}
-                />
-            </div>
-            {openNew && <FormContainer>
-                <Form setList={(news)=>setBasePosts([...basedPosts, news])}/>
-            </FormContainer>}
-            </Content>
+            />
         </div>
     )
 }
@@ -87,13 +86,4 @@ const ActionGroup = styled.div`
     display : flex;
     flex-direction : row;
     justify-content : right;
-`
-
-const Content = styled.div`
-    display : flex;
-    flex-direction : row;
-`
-
-const FormContainer = styled.div`
-
 `

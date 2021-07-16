@@ -9,36 +9,54 @@ import { v4 } from 'uuid';
 function Form({setList , edit, editing}) {
     const [load , setLoad] = useState(false)
     const [post , setPost] = useState({
-        title : !editing ? "" : edit[0]?.title ,
-        userId : 10,
+        title : !editing ? "" : edit[0]?.title,
+        completed : false,
+        userId : !editing ? 10 : edit[0]?.userId,
         id : !editing ? v4() : edit[0]?.id
     });
 
-    console.log(editing);
+    
 
     const HandleSubmit = (e) =>{
         e.preventDefault();
         (fetch(!editing ? 'https://jsonplaceholder.typicode.com/todos' : `https://jsonplaceholder.typicode.com/todos/${edit[0]?.id}`, {
             method: !editing ? 'POST' : 'PUT',
-            body: JSON.stringify({...post , userId : 10}),
+            body: JSON.stringify({...post , userId : !editing ? 10 : edit[0]?.userId}),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
             },
             })
             .then((response) => response.json())
             .then((json) => {
+                console.log(json)
                 setList(json);
+                setPost({id : "", title : ""});
+                editing = false;
             })
-            // .then(()=>setPost({id : "", title : "", userId : null}))
-            .then(()=> setLoad(true))) 
-    }
+            .then(()=>setLoad(true))
+            .then(()=>pushNotification()) 
+        )}
 
+
+
+    useEffect(()=>{
+        setPost({
+            title : !editing ? "" : edit[0]?.title ,
+            userId : 10,
+            completed : false,
+            id : !editing ? v4() : edit[0]?.id
+        })
+    },[edit])
+
+    const pushNotification = () => setTimeout(()=>setLoad(false),2000)
+
+    console.log(editing);
     return (
         <FormContainer>
             <label>Title :</label>
             <input type="text" placeholder="Put your title here ..." onChange={(e)=>setPost({...post, title: e.target.value})} value={post.title}/>
             <Button onClick={(e)=>HandleSubmit(e)}>Add</Button>
-            {load && <span><FontAwesomeIcon icon={faCheckCircle}/> Todos {edit == [] ? "added!(au 20e pagination)" : "updated"} </span>}
+            {load && <span><FontAwesomeIcon icon={faCheckCircle}/> Todos {!editing ? "added!(to the 21e pagination)" : "updated"} </span>}
         </FormContainer>
     )
 }
@@ -48,8 +66,9 @@ export default Form;
 const FormContainer = styled.form`
     display : flex;
     flex-direction : column;
-    width : 400px;
-    margin : -20px auto;
+    flex-grow : 1;
+    margin : 0 20px;
+    padding : 0 20px;
     label{
         margin: 10px 0;
     }
@@ -83,6 +102,7 @@ const Button = styled.button`
     border : none;
     margin : 10px 0;
     cursor : pointer;
+    outline : none;
     span{
         margin-left :10px;
     }

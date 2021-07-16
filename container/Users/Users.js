@@ -44,8 +44,9 @@ function Users({data}) {
 export default Users
 
 const Container = styled.div`
-    // display : flex;
-    // flex-direction : row;
+    display : flex;
+    flex-direction : column;
+    height : 100vh;
 `
 
 const ListUserContainer = styled.table`

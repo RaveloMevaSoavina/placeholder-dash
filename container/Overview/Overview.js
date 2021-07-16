@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect, useState } from 'react';
 import Head from 'next/head'
 import styled from 'styled-components'
 
@@ -15,6 +15,16 @@ import { faUser } from "@fortawesome/free-solid-svg-icons"; // import the icons 
 
 
 function Overview({data}) {
+    const [users, setusers] = useState(data.users);
+
+    const handleremove = (id) => {
+        fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
+            method: 'DELETE',
+        }).then(()=>setusers(users?.filter(post=> post.id != id)));
+
+        ;
+    }
+
     return (
         <div>
             <Head>
@@ -34,7 +44,7 @@ function Overview({data}) {
             <Titlebar title="Users" subtitle="All users"/>
             <ListUserContainer>
                 {
-                data?.users?.map(usr=>
+                users?.map(usr=>
                     <List 
                     key={usr.id} 
                     id={usr.id} 
@@ -43,7 +53,8 @@ function Overview({data}) {
                     email={usr.email} 
                     phone={usr.phone} 
                     posted={data?.posts}
-                    todos={data?.todos}/>
+                    todos={data?.todos}
+                    remove={handleremove}/>
                 )}
             </ListUserContainer>
         </div>

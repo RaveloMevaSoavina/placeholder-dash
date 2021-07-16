@@ -54,6 +54,7 @@ const Item = styled.td`
         width : 30px;
         height : 30px;
         padding : 5px;
+        outline : none;
         &:hover{
             background-color : #FFF;
             color : #ff0055;

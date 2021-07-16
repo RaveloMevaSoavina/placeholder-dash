@@ -41,7 +41,8 @@ function Todos({data}) {
     }
 
     const handleAddorUpdate = (news) => {
-        !editing ? setBaseTodos([...basedTodos, news]) : setBaseTodos([...basedTodos, basedTodos[news.id - 1].title =  news.title]);
+        console.log(news);
+        !editing ? setBaseTodos([...basedTodos, news]) : setBaseTodos([...basedTodos, basedTodos[news.id - 1].title =  news.title, basedTodos[news.id - 1].userId =  news.userId]);
     }
 
     return (
@@ -50,38 +51,27 @@ function Todos({data}) {
                 <title>(+{basedTodos.length-1}) Todos | Placeholder</title>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />    
             </Head>
-            <div>
-                <Titlebar title="Todos" subtitle={`All public todos based on authors (${basedTodos.length} items)`}/>
+            <Titlebar title="Todos" subtitle={`All public todos based on authors (${basedTodos.length} items)`}/>
                 <ActionGroup>
-                        <Button onClick={()=>setOpenNew(!openNew)}> <FontAwesomeIcon icon={faPlus}/> <span>Add a new Todos</span></Button>
+                    <Button onClick={()=>setOpenNew(!openNew)}> <FontAwesomeIcon icon={faPlus}/> <span>Add a new Todos</span></Button>
                 </ActionGroup>
-                <Blog data={currentPosts} redirect={redirectToSingle} users={data.users} remove={handleremove} edit={handleEdit} />
-                <Pagination
-                        postsPerPage={postsPerPage}
-                        totalPosts={basedTodos.length}
-                        paginate={paginate}
-                />
-            </div>
-            {openNew &&<div>
-             <FormContainer>
-                <FormTodos setList={handleAddorUpdate} edit={edit} editing={editing}/>
-            </FormContainer>
-            </div>}
+            {openNew && <FormTodos setList={handleAddorUpdate} edit={edit} editing={editing}/>}
+            <Blog data={currentPosts} redirect={redirectToSingle} users={data.users} remove={handleremove} edit={handleEdit} />
+            <Pagination
+                postsPerPage={postsPerPage}
+                totalPosts={basedTodos.length}
+                paginate={paginate}
+            />
         </Container>
     )
 }
 
 export default Todos
+
 const Container = styled.div`
     display : flex;
-    flex-direction : row;
-
-
-
-`
-
-const FormContainer = styled.div`
-    margin-top : 80px;
+    flex-direction : column;
+    flex :1;
 `
 
 const Button = styled.button`
@@ -91,6 +81,7 @@ const Button = styled.button`
     border : none;
     margin : 20px 30px;
     cursor : pointer;
+    outline : none;
     span{
         margin-left :10px;
     }
