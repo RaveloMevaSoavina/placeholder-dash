@@ -1,46 +1,44 @@
 import { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components'
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import the FontAwesomeIcon component
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons"; // import the icons you need
+import { v4 } from 'uuid';
 
 
-function Form({setList , edit}) {
+function Form({setList , edit, editing}) {
     const [load , setLoad] = useState(false)
     const [post , setPost] = useState({
-        id : uuidv4(),
-        title : "",
-        body: "",
-        userId : 10
+        title : !editing ? "" : edit[0]?.title ,
+        userId : 10,
+        id : !editing ? v4() : edit[0]?.id
     });
+
+    console.log(editing);
 
     const HandleSubmit = (e) =>{
         e.preventDefault();
-        fetch('https://jsonplaceholder.typicode.com/posts', {
-            method: 'POST',
-            body: JSON.stringify({...post}),
+        (fetch(!editing ? 'https://jsonplaceholder.typicode.com/todos' : `https://jsonplaceholder.typicode.com/todos/${edit[0]?.id}`, {
+            method: !editing ? 'POST' : 'PUT',
+            body: JSON.stringify({...post , userId : 10}),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
             },
             })
             .then((response) => response.json())
             .then((json) => {
-                setList(json)
-                setPost({id : "", title : "", body : "" , userId : null});
+                setList(json);
             })
-            .then(()=>setLoad(true));
+            // .then(()=>setPost({id : "", title : "", userId : null}))
+            .then(()=> setLoad(true))) 
     }
 
     return (
         <FormContainer>
             <label>Title :</label>
-            <input type="text" placeholder="Put your title here ..." onChange={(e)=>setPost({...post, title: e.target.value})} value/>
-
-            <label>Body :</label>
-            <textarea rows="6" type="text" placeholder="Put your body content here ..." onChange={(e)=>setPost({...post, body: e.target.value})}/>
+            <input type="text" placeholder="Put your title here ..." onChange={(e)=>setPost({...post, title: e.target.value})} value={post.title}/>
             <Button onClick={(e)=>HandleSubmit(e)}>Add</Button>
-            {load && <span><FontAwesomeIcon icon={faCheckCircle}/> Post added! (au 11e pagination)</span>}
+            {load && <span><FontAwesomeIcon icon={faCheckCircle}/> Todos {edit == [] ? "added!(au 20e pagination)" : "updated"} </span>}
         </FormContainer>
     )
 }

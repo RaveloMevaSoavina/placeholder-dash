@@ -37,6 +37,10 @@ function posts({data}) {
         setBasePosts(basedPosts?.filter(post=> post.id != id));
     }
 
+    const handleEdit = (id) => {
+        setOpenNew(true);
+        setEdit(basedTodos.filter(todo=> todo.id == id));
+    }
 
     return (
         <div>
@@ -50,7 +54,7 @@ function posts({data}) {
                 <ActionGroup>
                     <Button onClick={()=>setOpenNew(!openNew)}> <FontAwesomeIcon icon={faPlus}/> <span>Add a new Post</span></Button>
                 </ActionGroup>
-                <Blog data={currentPosts} redirect={redirectToSingle} users={data.users} remove={handleremove}/>
+                <Blog data={currentPosts} redirect={redirectToSingle} users={data.users} remove={handleremove} edit={handleEdit}/>
                 <Pagination
                     postsPerPage={postsPerPage}
                     totalPosts={basedPosts.length}

@@ -3,8 +3,9 @@ import styled from 'styled-components'
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import the FontAwesomeIcon component
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons"; // import the icons you need
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons"; // import the icons you need
 
-function Blog({data, redirect, users , remove}) {
+function Blog({data, redirect, users , remove , edit}) {
 
     return (
         <Container>
@@ -14,9 +15,13 @@ function Blog({data, redirect, users , remove}) {
                     <button onClick={()=>remove(post.id)}>
                         <FontAwesomeIcon icon={faTrashAlt}/>
                     </button>
+                    <button onClick={()=>edit(post.id)}>
+                        <FontAwesomeIcon icon={faPencilAlt}/>
+                    </button>
                     <h3 onClick={()=>redirect(post.id)}>{post?.title?.charAt(0)?.toUpperCase() + post?.title?.slice(1)}</h3>
-                    <span >Edit by @{users?.filter(user => user?.id === post?.userId)[0]?.name}</span>
-                    <p onClick={()=>redirect(post.id)}>{post?.body?.charAt(0)?.toUpperCase() + post?.body?.slice(1)}.</p>
+                    <Author >Edit by @{users?.filter(user => user?.id === post?.userId)[0]?.name}</Author>
+                    {post.completed != undefined && <div test={post?.completed === true ? "complete" : "uncomplete"}>{post.completed == true ? "Complete" : "Uncomplete"}</div>}
+                    {post.body != undefined && <p onClick={()=>redirect(post.id)}>{post?.body?.charAt(0)?.toUpperCase() + post?.body?.slice(1)}.</p>}
             </SinglePostContainer>
             )}
         </Container>
@@ -48,13 +53,14 @@ const SinglePostContainer = styled.div`
         font-size : 12px;
 
     }
-    span{
+    div{
+        display : inline;
         font-size : 13px;
-        background-color : #1E3CBF;
+        background-color : ${props => (props.test !== "uncomplete" ? "green"  : "red")};
         color : #DDE4F0;
         padding : 5px 10px;
         border-radius : 5px;
-        margin : 5px 0;
+        margin : 5px ;
     }
     button{
         float : right;
@@ -71,4 +77,13 @@ const SinglePostContainer = styled.div`
         }
     }
     }
+`
+
+const Author = styled.span`
+        font-size : 13px;
+        background-color : #1E3CBF;
+        color : #DDE4F0;
+        padding : 5px 10px;
+        border-radius : 5px;
+        margin : 5px 0;
 `
