@@ -27,7 +27,7 @@ function Todos({data}) {
         router.push(`todos/${id}`);
     }
     const handleremove = (id) => {
-        fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+        fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
             method: 'DELETE',
         }).then(()=>setBaseTodos(basedTodos?.filter(post=> post.id != id)));
 

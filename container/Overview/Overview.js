@@ -31,7 +31,7 @@ function Overview({data}) {
                 <Card icon={ faList } label="Todos" itemnumber={data?.todos?.length}/>
                 <Card icon={ faUser } label="Users" itemnumber={data?.users?.length}/>
             </CardContainer>
-            <Titlebar title="User" subtitle="All users"/>
+            <Titlebar title="Users" subtitle="All users"/>
             <ListUserContainer>
                 {
                 data?.users?.map(usr=>
