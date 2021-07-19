@@ -41,7 +41,7 @@ function SingleUser({data}) {
 
     {/** Redirection lors du clique sur un post pour /post/id */}
     const redirectToSingle = (id) => { 
-        router.push(`http://localhost:3000/posts/${id}`);
+        router.push(`/posts/${id}`);
     }
 
     {/** Function pour la supressioin d'un post */}
@@ -69,7 +69,7 @@ function SingleUser({data}) {
             <Titlebar title="About" subtitle="Concerning a user"/>
             <Content>
                 <Profile>
-                    <img alt="avatar" src="http://localhost:3000/assets/images/avatar.jpg"/>
+                    <img alt="avatar" src="/assets/images/avatar.jpg"/>
                     <Name>{user.name} (<span>{user.username}</span>)</Name>
                     <Email>email : {user.email} - phone :{user.phone.split(" ")[0]}</Email>
                     

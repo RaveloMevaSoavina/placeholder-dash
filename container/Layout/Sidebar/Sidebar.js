@@ -7,7 +7,7 @@ import {menuitems} from './Sidebaritems';
 function Sidebar() {
     return (
         <Container>
-            <Logo src={`http://localhost:3000/assets/images/shazam.png`} alt="Logo"/>
+            <Logo src={`/assets/images/shazam.png`} alt="Logo"/>
                 <ItemList>
                 {
                     menuitems.map((item,index) => 
