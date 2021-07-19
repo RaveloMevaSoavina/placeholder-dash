@@ -1,16 +1,20 @@
-import React ,{useState} from 'react'
+// React
+import React from 'react'
+// Stylesheet
 import styled from 'styled-components'
+// Internal Component
 import UserThumb from '../../components/UI/UserThumb/UserThumb'
+// Tiers Libraries
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import the FontAwesomeIcon component
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons"; // import the icons you need
 
-
-function List({id , name , username,email, phone, posted, todos , remove}) {
+function List({id , name , username,email, phone, posted, todos , remove, redirect , readOnly}) {
     return (
-        <Container >
-            <tr>
+        <Container>
+            <tr onClick={()=>redirect(id)}>
                 <Item>
+                    {/** Initial dans un rond*/}
                     <UserThumb name={name.split(" ").splice(0,2).map((n)=>n[0]).join("")}/>
                 </Item>
                 <Item>{username}</Item>
@@ -18,11 +22,12 @@ function List({id , name , username,email, phone, posted, todos , remove}) {
                 <Item>{phone.split(" ")[0]}</Item>
                 <Item> {posted?.filter(post=> post.userId == id).length} posts</Item>
                 <Item> {todos?.filter(todo=> todo.userId == id).length} todos</Item>
-                <Item>
+                {!readOnly && <Item>
+                    {/** Boutton pour la supréssion d'un utilisateur*/}
                     <button onClick={()=>remove(id)}>
                         <FontAwesomeIcon icon={faTrashAlt}/>
                     </button>
-                </Item>
+                </Item>}
             </tr>
         </Container>
     )
@@ -43,6 +48,8 @@ const Container = styled.table`
 
 const Item = styled.td`
     text-align : left;
+    font-size : 1em;
+    margin : 0 10px;
     span{
         margin-left : 20px;
     }

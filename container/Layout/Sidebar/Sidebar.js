@@ -4,18 +4,15 @@ import React from 'react';
 import styled from 'styled-components'
 import {menuitems} from './Sidebaritems';
 
-import ImageSvg from '../../../assets/images/logo.svg'
-
 function Sidebar() {
     return (
         <Container>
-            <Logo src={`http://localhost:3000/assets/images/shazam.png`} alt="P"/>
+            <Logo src={`http://localhost:3000/assets/images/shazam.png`} alt="Logo"/>
                 <ItemList>
                 {
-                    
                     menuitems.map((item,index) => 
-                    <Link href={item.redirect}>
-                        <Item key={index}>
+                    <Link key={index} href={item.redirect}>
+                        <Item >
                             <Icon>{item.icon}</Icon>
                             <span>{item.label}</span>
                         </Item>
@@ -35,8 +32,6 @@ const Logo = styled.img`
     padding : 10px 0;
     
 `
-
-
 const Container = styled.div`
     height : 100vh;
     width : 100px;

@@ -1,12 +1,22 @@
+// React
 import React from 'react'
+
+// Next 
+import { useRouter } from 'next/router'
+
+
+// Stylesheet
 import styled from 'styled-components'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import the FontAwesomeIcon component
+// Tiers Libraries
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
 
 
-function Card({icon , label, itemnumber}) {
+function Card({icon , label, itemnumber ,redirect}) {
+    const router = useRouter()
+
     return (
-        <Container>
-            <Icon><FontAwesomeIcon icon={icon} size="lg"/></Icon>
+        <Container onClick={()=>redirect(label.toLowerCase())}>
+            <Icon><FontAwesomeIcon icon={icon} size="lg"/></Icon> {/* Resources icon */}
             <Label>{label}</Label>
             <Number>{itemnumber}</Number>
         </Container>
@@ -16,9 +26,9 @@ function Card({icon , label, itemnumber}) {
 export default Card
 
 const Container = styled.div`
-    margin : 10px 20px;
     width :150px;
     height : 90px;
+    margin : 10px 20px;
     background-color : #03060C;
     color : #DDE4F0;
     border-radius : 10px;

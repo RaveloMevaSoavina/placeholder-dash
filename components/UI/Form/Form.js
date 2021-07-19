@@ -51,8 +51,8 @@ function Form({setList , edit , editing}) {
 
             <label>Body :</label>
             <textarea rows="6" type="text" placeholder="Put your body content here ..." onChange={(e)=>setPost({...post, body: e.target.value})} value={post.body}/>
-            <Button onClick={(e)=>HandleSubmit(e)}>Add</Button>
-            {load && <span><FontAwesomeIcon icon={faCheckCircle}/> Post added! (au 11e pagination)</span>}
+            <Button onClick={(e)=>HandleSubmit(e)}>{!editing ? "Add" : "Update"} </Button>
+            {load && <span><FontAwesomeIcon icon={faCheckCircle}/> Post {!editing ? "added! (au 11e pagination)" : "updated"} </span>}
         </FormContainer>
     )
 }
@@ -65,6 +65,7 @@ const FormContainer = styled.form`
     flex-grow : 1;
     margin : 0 20px;
     padding : 0 20px;
+    min-width : calc(100vw - 150px);
     label{
         margin: 10px 0;
     }

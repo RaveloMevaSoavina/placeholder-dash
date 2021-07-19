@@ -6,7 +6,7 @@ import { faCheckCircle } from "@fortawesome/free-solid-svg-icons"; // import the
 import { v4 } from 'uuid';
 
 
-function Form({setList , edit, editing}) {
+function Form({setList , edit, editing , autoclose}) {
     const [load , setLoad] = useState(false)
     const [post , setPost] = useState({
         title : !editing ? "" : edit[0]?.title,
@@ -28,16 +28,15 @@ function Form({setList , edit, editing}) {
             })
             .then((response) => response.json())
             .then((json) => {
-                console.log(json)
                 setList(json);
                 setPost({id : "", title : ""});
-                editing = false;
             })
             .then(()=>setLoad(true))
             .then(()=>pushNotification()) 
         )}
 
 
+    const close = () => autoclose()
 
     useEffect(()=>{
         setPost({
@@ -50,12 +49,11 @@ function Form({setList , edit, editing}) {
 
     const pushNotification = () => setTimeout(()=>setLoad(false),2000)
 
-    console.log(editing);
     return (
         <FormContainer>
             <label>Title :</label>
             <input type="text" placeholder="Put your title here ..." onChange={(e)=>setPost({...post, title: e.target.value})} value={post.title}/>
-            <Button onClick={(e)=>HandleSubmit(e)}>Add</Button>
+            <Button onClick={(e)=>HandleSubmit(e)}>{!editing ? "Add" : "Update"}</Button>
             {load && <span><FontAwesomeIcon icon={faCheckCircle}/> Todos {!editing ? "added!(to the 21e pagination)" : "updated"} </span>}
         </FormContainer>
     )
@@ -69,6 +67,7 @@ const FormContainer = styled.form`
     flex-grow : 1;
     margin : 0 20px;
     padding : 0 20px;
+    min-width : calc(100vw - 150px);
     label{
         margin: 10px 0;
     }

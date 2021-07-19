@@ -1,18 +1,18 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import the FontAwesomeIcon component
-import { faTachometerAlt } from "@fortawesome/free-solid-svg-icons"; // import the icons you need
-import { faClipboard } from "@fortawesome/free-solid-svg-icons"; // import the icons you need
-import { faComments } from "@fortawesome/free-solid-svg-icons"; // import the icons you need
-import { faPhotoVideo } from "@fortawesome/free-solid-svg-icons"; // import the icons you need
-import { faImages } from "@fortawesome/free-solid-svg-icons"; // import the icons you need
-import { faList } from "@fortawesome/free-solid-svg-icons"; // import the icons you need
-import { faUser } from "@fortawesome/free-solid-svg-icons"; // import the icons you need
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTachometerAlt } from "@fortawesome/free-solid-svg-icons"; 
+import { faClipboard } from "@fortawesome/free-solid-svg-icons"; 
+// import { faComments } from "@fortawesome/free-solid-svg-icons"; 
+// import { faPhotoVideo } from "@fortawesome/free-solid-svg-icons"; 
+// import { faImages } from "@fortawesome/free-solid-svg-icons"; 
+import { faList } from "@fortawesome/free-solid-svg-icons"; 
+import { faUser } from "@fortawesome/free-solid-svg-icons"; 
 
 import {
     OVERVIEW_PAGE,
     POSTS_PAGE,
-    COMMENTS_PAGE,
-    ALBUM_PAGE,
-    PHOTO_PAGE,
+    // COMMENTS_PAGE,
+    // ALBUM_PAGE,
+    // PHOTO_PAGE,
     TODOS_PAGE,
     USERS_PAGE
 } from '../../../settings/constants';
